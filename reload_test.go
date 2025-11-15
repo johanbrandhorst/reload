@@ -108,7 +108,7 @@ func TestReloader(t *testing.T) {
 			}
 
 			// Trigger reload
-			err = os.WriteFile(filepath.Join(dir, "test.txt"), []byte("anything"), 0644)
+			err = os.WriteFile(filepath.Join(dir, "test.txt"), []byte("anything"), 0o644)
 			if err != nil {
 				t.Errorf("Failed to write file: %v", err)
 				return
@@ -124,10 +124,8 @@ func TestReloader(t *testing.T) {
 				t.Error("Test timed out waiting for goroutine to finish")
 				return
 			}
-
 		}()
 	}
 	close(startCh)
 	wg.Wait()
-
 }
