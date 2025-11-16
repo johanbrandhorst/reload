@@ -5,11 +5,10 @@ Auto-reload browser when assets change
 # How to use
 
 1. Embed the JS script into your index.html or equivalent, for example,
-   using Go templates:
+   using `fmt.Sprintf`:
 
    ```go
-   const templateName = "index.html"
-   var indexTemplate = template.Must(template.New(templateName).Parse(
+   var indexHTML = fmt.Sprintf(
    	`<!doctype html>
    <html lang="en" class="h-full bg-gray-100">
    <head>
@@ -24,13 +23,11 @@ Auto-reload browser when assets change
    <body class="h-full">
       <div id="root" class="h-full"></div>
    </body>
-   {{ .ReloadScript }}
+   %s
    </html>
-   `))
+   `, reload.Script)
    func ServeIndexHTML(w http.ResponseWriter, r *http.Request) {
-   	indexTemplate.ExecuteTemplate(w, templateName, map[string]any{
-   		"ReloadScript": reload.Script,
-   	})
+   	w.Write([]byte(indexHTML))
    }
    ```
 
